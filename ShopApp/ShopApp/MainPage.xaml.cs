@@ -127,49 +127,59 @@ namespace ShopApp
 
         private void SearchBar_OnSearchButtonPressed(object sender, EventArgs e)
         {
-            //List<ShopItem> results = ShopItems.FindAll(
-            //    delegate (ShopItem bk) { return bk.Name.Contains(SearchBar_Text.Text); }
-            //);
-            //if (results.Count != 0)
-            //{
-            //    ProductList.ItemsSource = results;
-            //}
-            //else
-            //{
-            //    List<ShopItem> noresults = new List<ShopItem> {
-            //        new ShopItem {Name = "No Results Found" , Status =" " , Price = " "  , ImgSource = " " },
-            //    };
 
-            //    ProductList.ItemsSource = noresults;
+            if (string.IsNullOrEmpty(SearchBar_Text.Text))
+            {
+                ProductList.ItemsSource = ShopItems;
+            }
+            else
+            {
+                var fil = new Filter(SearchBar_Text.Text, 0);
+                List<ItemPair> results = ShopItems.FindAll(
+                    delegate (ItemPair bk) { return bk.Item1.Categorie.Contains(fil.FilterName) || bk.Item2.Categorie.Contains(fil.FilterName); }
+                );
+                if (results.Count != 0)
+                {
+                    ProductList.ItemsSource = results;
+                }
+                else
+                {
+                    List<ItemPair> noresults = new List<ItemPair> {
+                        new ItemPair(new ShopItem {Name = "No Results Found" , Status =" " , Price = " "  , ImageSource = " " },null)
+                    };
 
-            //}
+                    ProductList.ItemsSource = noresults;
+
+                }
+            }
         }
 
         private void SearchBar_Text_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            //if (string.IsNullOrEmpty(SearchBar_Text.Text))
-            //{
-            //    ProductList.ItemsSource = ShopItems;
-            //}
-            //else
-            //{
-            //    List<ShopItem> results = ShopItems.FindAll(
-            //        delegate (ShopItem bk) { return bk.Name.Contains(SearchBar_Text.Text); }
-            //    );
-            //    if (results.Count != 0)
-            //    {
-            //        ProductList.ItemsSource = results;
-            //    }
-            //    else
-            //    {
-            //        List<ShopItem> noresults = new List<ShopItem> {
-            //            new ShopItem {Name = "No Results Found" , Status =" " , Price = " "  , ImgSource = " " },
-            //        };
+            if (string.IsNullOrEmpty(SearchBar_Text.Text))
+            {
+                ProductList.ItemsSource = ShopItems;
+            }
+            else
+            {
+                var fil = new Filter(SearchBar_Text.Text, 0);
+                List<ItemPair> results = ShopItems.FindAll(
+                    delegate (ItemPair bk) { return bk.Item1.Categorie.Contains(fil.FilterName) || bk.Item2.Categorie.Contains(fil.FilterName); }
+                );
+                if (results.Count != 0)
+                {
+                    ProductList.ItemsSource = results;
+                }
+                else
+                {
+                    List<ItemPair> noresults = new List<ItemPair> {
+                        new ItemPair(new ShopItem {Name = "No Results Found" , Status =" " , Price = " "  , ImageSource = " " },null)
+                    };
 
-            //        ProductList.ItemsSource = noresults;
+                    ProductList.ItemsSource = noresults;
 
-            //    }
-            //}
+                }
+            }
         }
 
         public class Filter
