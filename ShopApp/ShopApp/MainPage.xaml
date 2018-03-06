@@ -84,11 +84,13 @@
                                 <Grid Margin="0" Padding="0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="0" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Frame BindingContext="{Binding Item1}" Padding="2" BackgroundColor="#F9FAFC"
-                                           HasShadow="False" OutlineColor="#bbb" Margin="0">
+
+                                    <Frame BindingContext="{Binding Item1}" Padding="2" BackgroundColor="#F9FAFC" HasShadow="False" OutlineColor="#bbb" Margin="0" >
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="FrameTapGestureRecognizer_OnTapped"></TapGestureRecognizer>
+                                        </Frame.GestureRecognizers>
                                         <Grid Margin="0" Padding="0">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="30" />
@@ -119,9 +121,10 @@
                                         </Grid>
                                     </Frame>
 
-                                    <Frame Grid.Column="2" BindingContext="{Binding Item2}"
-                                           IsVisible="{Binding IsVisible}" Padding="2" BackgroundColor="#F9FAFC"
-                                           HasShadow="False" OutlineColor="#bbb" Margin="0">
+                                    <Frame Grid.Column="1" BindingContext="{Binding Item2}" IsVisible="{Binding IsVisible}" Padding="2" BackgroundColor="#F9FAFC" HasShadow="False" OutlineColor="#bbb" Margin="0">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="FrameTapGestureRecognizer_OnTapped"></TapGestureRecognizer>
+                                        </Frame.GestureRecognizers>
                                         <Grid Margin="0" Padding="0">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="30" />

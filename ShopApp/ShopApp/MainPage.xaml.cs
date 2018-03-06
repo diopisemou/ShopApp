@@ -20,6 +20,7 @@ namespace ShopApp
                 new ItemPair(new ShopItem("Travel"), new ShopItem("Bags"))
             };
 
+            
             FilterList = new List<Filter>
             {
                 new Filter("Bags", 0),
@@ -200,14 +201,18 @@ namespace ShopApp
                 {
                     if (senderLabel.Text == VARIABLE.Text)
                     {
-                        VARIABLE.FontSize = 22;
+                        VARIABLE.FontSize = 0.1*(VARIABLE.FontSize) + VARIABLE.FontSize;
                         VARIABLE.Opacity = 1;
                         VARIABLE.TextColor = Color.FromHex("#F9FAFC");
+                        VARIABLE.FontAttributes = FontAttributes.Bold;
+                        VARIABLE.Margin = new Thickness(0,-4,0,0);
                     }
                     else
                     {
+                        VARIABLE.FontAttributes = FontAttributes.None;
                         VARIABLE.FontSize = 15;
                         VARIABLE.Opacity = 0.7;
+                        VARIABLE.Margin = new Thickness(5);
                     }
                 }
 
@@ -247,6 +252,17 @@ namespace ShopApp
         private void ClickGestureRecognizer_OnClicked(object sender, EventArgs e)
         {
             DisplayAlert("Label", "Label Clicked", "Ok");
+        }
+
+       
+
+        private void FrameTapGestureRecognizer_OnTapped(object sender, EventArgs e)
+        {
+            Frame senderFrame = (Frame)sender;
+            ShopItem shopi = new ShopItem();
+            //ItemPair bk = senderFrame.BindingContext as ItemPair;
+            shopi = senderFrame.BindingContext as ShopItem;
+            DisplayAlert("Frame Tapped ", "Product Name : " + shopi.Name + " Product Category : " + shopi.Categorie, "Ok");
         }
     }
 }
