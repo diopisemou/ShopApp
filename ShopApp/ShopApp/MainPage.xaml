@@ -1,11 +1,205 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:ShopApp"
              x:Class="ShopApp.MainPage">
 
-	<Label Text="Welcome to Xamarin.Forms!" 
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="StackStyle" TargetType="StackLayout">
+                <Setter Property="HorizontalOptions" Value="Fill" />
+                <Setter Property="WidthRequest" Value="300" />
+                <Setter Property="Orientation" Value="Vertical" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+            </Style>
+
+            <Style x:Key="CarouselLabelStyle" TargetType="Label">
+
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="#F9FAFC" />
+                <Setter Property="HeightRequest" Value="25" />
+            </Style>
+
+            <Style x:Key="FooterButtonStyle" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="BorderColor" Value="Transparent" />
+                <Setter Property="HeightRequest" Value="45" />
+                <Setter Property="WidthRequest" Value="45" />
+                <Setter Property="Margin" Value="10" />
+            </Style>
+
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Orientation="Vertical">
+
+        <StackLayout x:Name="ShopHeader" Orientation="Horizontal" BackgroundColor="#443E43" HeightRequest="70">
+            <ScrollView Orientation="Horizontal" WidthRequest="500" HeightRequest="50">
+                <StackLayout x:Name="FilterIem" Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" >
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+
+        <StackLayout x:Name="ShopSearchBar" Margin="5" HeightRequest="30" MinimumHeightRequest="30"
+                     BackgroundColor="#f9fafc" Orientation="Vertical">
+            <Grid BackgroundColor="White" RowSpacing="-20" HorizontalOptions="Start" VerticalOptions="Start">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <SearchBar x:Name="SearchBar_Text" Grid.Row="1" Placeholder="Search Here"
+                           SearchButtonPressed="SearchBar_OnSearchButtonPressed"
+                           TextChanged="SearchBar_Text_OnTextChanged" PlaceholderColor="Black" />
+                <Image Source="icon.png" Style="{StaticResource FooterButtonStyle}" Grid.Row="1" Grid.Column="1">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="TapGestureRecognizer_OnTappedFilter"
+                            NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+        </StackLayout>
+
+        <StackLayout x:Name="ShopContent" BackgroundColor="#F9FAF" HeightRequest="700" Margin="0" Padding="0">
+
+            <Grid Margin="0" Padding="0">
+                <ListView x:Name="ProductList" SeparatorVisibility="Default" SeparatorColor="#443E43"
+                          HasUnevenRows="True" HeightRequest="700" Margin="0">
+
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Margin="0" Padding="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="0" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Frame BindingContext="{Binding Item1}" Padding="2" BackgroundColor="#F9FAFC"
+                                           HasShadow="False" OutlineColor="#bbb" Margin="0">
+                                        <Grid Margin="0" Padding="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="30" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Frame BackgroundColor="#F9FAFC" Padding="5" HasShadow="False">
+                                                <Label Text="{Binding Status}" HorizontalOptions="Center"
+                                                       VerticalOptions="Center" FontSize="12"
+                                                       LineBreakMode="TailTruncation" TextColor="#443E43" Opacity="0.7">
+                                                    </Label>
+
+                                            </Frame>
+                                            <StackLayout Grid.Row="1" Padding="5,0,5,5" Spacing="1">
+                                                <Image Source="{Binding ImageSource}" Aspect="AspectFill"
+                                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                                       HeightRequest="80" />
+                                                <Label Text="{Binding Name}" VerticalOptions="Center"
+                                                       HorizontalOptions="Center" FontSize="16"
+                                                       LineBreakMode="WordWrap" HorizontalTextAlignment="Center"
+                                                       TextColor="#443E43" FontAttributes="Bold" />
+
+                                                <Label Text="{Binding Price}" FontSize="12" TextColor="#443E43"
+                                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                                       LineBreakMode="WordWrap" HorizontalTextAlignment="Center"
+                                                       Margin="2" />
+
+                                            </StackLayout>
+                                        </Grid>
+                                    </Frame>
+
+                                    <Frame Grid.Column="2" BindingContext="{Binding Item2}"
+                                           IsVisible="{Binding IsVisible}" Padding="2" BackgroundColor="#F9FAFC"
+                                           HasShadow="False" OutlineColor="#bbb" Margin="0">
+                                        <Grid Margin="0" Padding="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="30" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Frame BackgroundColor="#F9FAFC" Padding="5" HasShadow="False">
+                                                <Label Text="{Binding Status}" HorizontalOptions="Center"
+                                                       VerticalOptions="Center" FontSize="12"
+                                                       LineBreakMode="TailTruncation" TextColor="#443E43" Opacity="0.7" />
+
+                                            </Frame>
+                                            <StackLayout Grid.Row="1" Padding="5,0,5,5" Spacing="1">
+                                                <Image Source="{Binding ImageSource}" Aspect="AspectFill"
+                                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                                       HeightRequest="80" />
+                                                <Label Text="{Binding Name}" VerticalOptions="Center"
+                                                       HorizontalOptions="Center" FontSize="16"
+                                                       LineBreakMode="WordWrap" HorizontalTextAlignment="Center"
+                                                       TextColor="#443E43" FontAttributes="Bold" />
+
+                                                <Label Text="{Binding Price}" FontSize="12" TextColor="#443E43"
+                                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                                       LineBreakMode="WordWrap" HorizontalTextAlignment="Center"
+                                                       Margin="2" />
+
+                                            </StackLayout>
+                                        </Grid>
+                                    </Frame>
+
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+        </StackLayout>
+
+        <StackLayout x:Name="ShopFooter" Orientation="Horizontal" BackgroundColor="#443E43" HeightRequest="35"
+                     Padding="40,0">
+            <Image Source="home.png" Style="{StaticResource FooterButtonStyle}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Tapped="TapGestureRecognizer_OnTappedHome"
+                        NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Source="search.png" Style="{StaticResource FooterButtonStyle}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Tapped="TapGestureRecognizer_OnTappedSearch"
+                        NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Source="menu.png" Style="{StaticResource FooterButtonStyle}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Tapped="TapGestureRecognizer_OnTappedMenu"
+                        NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Source="cart.png" Style="{StaticResource FooterButtonStyle}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Tapped="TapGestureRecognizer_OnTappedCart"
+                        NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Source="account.png" Style="{StaticResource FooterButtonStyle}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Tapped="TapGestureRecognizer_OnTappedAccount"
+                        NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+
+    </StackLayout>
+
 
 </ContentPage>
