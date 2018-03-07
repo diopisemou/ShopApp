@@ -37,11 +37,14 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
+
+
     <StackLayout Orientation="Vertical">
 
         <StackLayout x:Name="ShopHeader" Orientation="Horizontal" BackgroundColor="#443E43" HeightRequest="70">
             <ScrollView Orientation="Horizontal" WidthRequest="500" HeightRequest="50">
                 <StackLayout x:Name="FilterIem" Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" >
+                    
                 </StackLayout>
             </ScrollView>
         </StackLayout>
@@ -60,8 +63,8 @@
 
                 <SearchBar x:Name="SearchBar_Text" Grid.Row="1" Placeholder="Search Here"
                            SearchButtonPressed="SearchBar_OnSearchButtonPressed"
-                           TextChanged="SearchBar_Text_OnTextChanged" PlaceholderColor="Black" />
-                <Image Source="icon.png" Style="{StaticResource FooterButtonStyle}" Grid.Row="1" Grid.Column="1">
+                           TextChanged="SearchBar_Text_OnTextChanged" PlaceholderColor="Gray" FontSize="14" FontAttributes="None"/>
+                <Image Source="filter_image.png" Style="{StaticResource FooterButtonStyle}" Grid.Row="1" Grid.Column="1">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer
                             Tapped="TapGestureRecognizer_OnTappedFilter"
@@ -70,12 +73,11 @@
                 </Image>
             </Grid>
         </StackLayout>
-
         <StackLayout x:Name="ShopContent" BackgroundColor="#F9FAF" HeightRequest="700" Margin="0" Padding="0">
 
             <Grid Margin="0" Padding="0">
                 <ListView x:Name="ProductList" SeparatorVisibility="Default" SeparatorColor="#443E43"
-                          HasUnevenRows="True" HeightRequest="700" Margin="0">
+                          HasUnevenRows="True" HeightRequest="700" Margin="0" IsRefreshing="False">
 
 
                     <ListView.ItemTemplate>
@@ -100,7 +102,7 @@
                                                 <Label Text="{Binding Status}" HorizontalOptions="Center"
                                                        VerticalOptions="Center" FontSize="12"
                                                        LineBreakMode="TailTruncation" TextColor="#443E43" Opacity="0.7">
-                                                    </Label>
+                                                </Label>
 
                                             </Frame>
                                             <StackLayout Grid.Row="1" Padding="5,0,5,5" Spacing="1">
@@ -121,7 +123,7 @@
                                         </Grid>
                                     </Frame>
 
-                                    <Frame Grid.Column="1" BindingContext="{Binding Item2}" IsVisible="{Binding IsVisible}" Padding="2" BackgroundColor="#F9FAFC" HasShadow="False" OutlineColor="#bbb" Margin="0">
+                                    <Frame Grid.Column="1" BindingContext="{Binding Item2}" IsVisible="{Binding IsVisible}" Padding="2" BackgroundColor="#F9FAFC" HasShadow="False" OutlineColor="#443E43" Margin="0">
                                         <Frame.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="FrameTapGestureRecognizer_OnTapped"></TapGestureRecognizer>
                                         </Frame.GestureRecognizers>
@@ -162,6 +164,7 @@
             </Grid>
 
         </StackLayout>
+        <ActivityIndicator x:Name="ActIndicator" IsVisible="False"  IsRunning="{Binding Source= {x:Reference ProductList}, Path=IsRefreshing}"  Color="#DBB34A"></ActivityIndicator>
 
         <StackLayout x:Name="ShopFooter" Orientation="Horizontal" BackgroundColor="#443E43" HeightRequest="35"
                      Padding="40,0">
